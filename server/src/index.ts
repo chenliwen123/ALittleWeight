@@ -13,10 +13,13 @@ const PROXY_URL = process.env.PROXY_URL || ''
 const proxyAgent = PROXY_URL ? new ProxyAgent(PROXY_URL) : null
 
 const app = express()
-const PORT = 3001
+const PORT = process.env.PORT || 3001
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').filter(Boolean)
 
 // 中间件
-app.use(cors())
+app.use(cors({
+  origin: ALLOWED_ORIGINS.length > 0 ? ALLOWED_ORIGINS : '*'
+}))
 app.use(express.json({ limit: '20mb' }))
 
 // 文件上传配置

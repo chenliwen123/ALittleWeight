@@ -1,8 +1,11 @@
 import axios from 'axios'
 import type { ApiResponse, UserGoals, DailySummary, DietRecord, WeightRecord, FavoriteFood } from '../types'
 
+// 生产环境使用 VITE_API_URL，开发环境通过 Vite proxy 走 /api
+const BASE_URL = import.meta.env.VITE_API_URL || '/api'
+
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: BASE_URL,
   timeout: 120000
 })
 
